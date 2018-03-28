@@ -19,16 +19,16 @@ class SignIn extends Component {
     const email = this.state.email;
     const password = this.state.password;
 
-
-    postRequest('/signin', {email: email, password: password})
-    .then(res => res.json())
-    .then(res => {
-      if(res) {
-        res.error ? swal({ type: 'error', title: 'Something went wrong...', text: res.error }) : this.props.history.push('/mainpage', res);
-      }
-    })
-    .catch(err => console.log(err));
-
+    if(email && password){
+      postRequest('/signin', {email: email, password: password})
+      .then(res => res.json())
+      .then(res => {
+        if(res) {
+          res.error ? swal({ type: 'error', title: 'Something went wrong...', text: res.error }) : this.props.history.push('/mainpage', res);
+        }
+      })
+      .catch(err => console.log(err));
+    }
   }
 
   render(){

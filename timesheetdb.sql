@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 27, 2018 at 04:10 PM
+-- Generation Time: Mar 28, 2018 at 07:47 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 5.6.32
 
@@ -40,7 +40,10 @@ CREATE TABLE `clients` (
 --
 
 INSERT INTO `clients` (`id`, `client_name`, `manager_name`, `position`) VALUES
-(1, 'Burt', 'Burt', 'payroll officer');
+(1, 'Burt Solomon', 'Burt Solomon', 'Manager'),
+(2, 'Perry White', 'Morgan Edge', 'Photographer'),
+(3, 'Sophia Freeman', 'Cindy Lapor', 'Junior Dev'),
+(4, 'Dilan MattLand', 'Cherl White', 'Payroll Officer\r\n');
 
 -- --------------------------------------------------------
 
@@ -53,15 +56,34 @@ CREATE TABLE `employees` (
   `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `first_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `last_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
+  `last_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `address` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `employees`
 --
 
-INSERT INTO `employees` (`id`, `email`, `password`, `first_name`, `last_name`) VALUES
-(1, 'tj@gmail.com', 'password', 'Tjae', 'Fiore');
+INSERT INTO `employees` (`id`, `email`, `password`, `first_name`, `last_name`, `address`) VALUES
+(1, 'tjae@gmail.com', 'password', 'Tjae', 'Fiore', '52 Goldsmith Villa'),
+(2, 'joe@gmail.com', 'password1', 'Joe', 'Bidden', '20 Oxford Park Avenue'),
+(3, 'erza@yahoo.com', 'password2', 'Erza', 'Scarlet', '31 Barbican Road'),
+(4, 'bob@yahoo.com', 'password2', 'Bobby', 'Stone', '36 Old Hope Road');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `time_results`
+--
+
+CREATE TABLE `time_results` (
+  `id` int(12) NOT NULL,
+  `task_name` varchar(255) NOT NULL,
+  `start_time` varchar(50) NOT NULL,
+  `end_time` varchar(50) NOT NULL,
+  `sdate` varchar(50) NOT NULL,
+  `comments` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Indexes for dumped tables
@@ -81,6 +103,12 @@ ALTER TABLE `employees`
   ADD UNIQUE KEY `users_email_unique` (`email`) USING BTREE;
 
 --
+-- Indexes for table `time_results`
+--
+ALTER TABLE `time_results`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -88,13 +116,19 @@ ALTER TABLE `employees`
 -- AUTO_INCREMENT for table `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `time_results`
+--
+ALTER TABLE `time_results`
+  MODIFY `id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

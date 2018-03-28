@@ -21,10 +21,6 @@ sql.connect((err) => {
   console.log('Connected to mysql db');
 });
 
-  app.get('/', function (req, res) {
-    res.send('Please use /api/users or /api/tasks');
-  });
-
   app.get('/clients', (req, res) => {
     sql.query('SELECT id, client_name FROM clients', (err, clients) => {
       if (err) throw err;
@@ -44,8 +40,7 @@ sql.connect((err) => {
     });    
   });
 
-  app.post('/signin', (req, res) => {
-       
+  app.post('/signin', (req, res) => {       
     const email = req.body.email;
     const password = req.body.password;
     
@@ -57,6 +52,14 @@ sql.connect((err) => {
       } else { 
         res.json({ error: 'Please check your credentials' });
       } 
+    });
+  });
+
+  app.post('/submit', (req, res) => {
+    const data = req.body.userdata;
+    sql.query('INSERT INTO time_results SET ?', data, (err, status) => {
+      if (err) throw err; 
+      res.json(status);
     });
   });
 

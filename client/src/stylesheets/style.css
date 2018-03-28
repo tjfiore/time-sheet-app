@@ -1,0 +1,21 @@
+.submitBtn{
+  width: 100;
+  background-color: #8661C1;
+}
+
+.card {
+  width: 30rem;
+  margin: 0 auto; 
+  margin-top: 50px; 
+  padding: 10px;
+}
+
+.align{
+  width: 50rem;
+  margin: 0 auto;
+  margin-top: 50px;
+  padding: 10px;
+}
+.comment-area{
+  resize: none;
+}

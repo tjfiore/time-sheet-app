@@ -6,8 +6,9 @@ import moment from "moment";
 
 class MainPage extends Component{
   state = {
-    firstname: '',
-    lastname: '',
+    first_name: '',
+    last_name: '',
+    address: '',
     userAdd: '',
     title:'',
     s_time: '',
@@ -18,17 +19,24 @@ class MainPage extends Component{
     showfields: false,
     manager: '',
     position: '',
+    date:'',
     dates: [],
    
   }
 
   componentDidMount(){   
-         
+    const key = Object.keys(this.props.location.state);
+        
     getRequest('/clients')
     .then(res => res.json())
     .then(res => {
       if(res){  
-        this.setState({clients: res});                   
+        this.setState({
+          clients: res,
+          first_name: this.props.location.state[key].first_name,
+          last_name: this.props.location.state[key].last_name,
+          address: this.props.location.state[key].address,
+        });                   
       }            
     })
     .catch(err => console.log(err));
@@ -45,7 +53,8 @@ class MainPage extends Component{
         dt.setDate(dt.getDate() + 1);
       }
       return arr;
-    }
+    };
+
     const dateArr = getDateArray(startDate, endDate);
 
     const new_arr = [];
@@ -53,7 +62,7 @@ class MainPage extends Component{
       let new_date = moment(date).format('ll');
       new_arr.push(new_date);
     });
-    this.setState({dates: new_arr})
+    this.setState({dates: new_arr});
     
     
   }
@@ -127,11 +136,27 @@ class MainPage extends Component{
       <div className="align">
         <form onSubmit={this.handleSubmit} className="form-horizontal">
 
+          <div className="row">
+            <div className="col-sm-5">
+              <div className="form-group">
+                <label>User Name</label>
+                <input type="text" name="title" className="form-control" placeholder="Enter name" 
+                value={this.state.first_name +' '+ this.state.last_name} onChange={e => this.setState({ first_name: e.target.value })} />
+              </div>
+            </div>
+            <div className="col-sm-7">
+              <div className="form-group">
+                <label>Address</label>
+                <input type="text" name="address" className="form-control" placeholder="Enter address" value={this.state.address} 
+                onChange={e => this.setState({ last_name: e.target.value })}  />
+              </div>
+            </div>
+          </div>
+          
           <div className="form-group">
             <label>Task Title</label>
-             <input type="text" name="title" className="form-control" placeholder="Enter task name" 
-               onChange={e => this.setState({ title: e.target.value })} />
-            
+            <input type="text" name="title" className="form-control" placeholder="Enter task name" 
+               onChange={e => this.setState({ title: e.target.value })} />            
           </div>
 
           <div className="form-group">            
@@ -152,7 +177,7 @@ class MainPage extends Component{
 
           <div className="form-group">
             <label>Select Date</label>
-            <select required className="form-control">
+            <select required onChange={e => this.setState({date: e.target.value})} className="form-control">
               {
                 this.state.dates.map((date, i) => {
                   return <option key={i} value={date}>{date}</option>

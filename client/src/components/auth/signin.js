@@ -25,7 +25,7 @@ class SignIn extends Component {
     .then(res => {
       if(res) {
         console.log(res);
-        res.error ? swal({ type: 'error', title: 'Something went wrong...', text: res.error }) : this.props.history.push('/mainpage');
+        res.error ? swal({ type: 'error', title: 'Something went wrong...', text: res.error }) : this.props.history.push('/mainpage', res);
       }
     })
     .catch(err => console.log(err));

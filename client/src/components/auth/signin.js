@@ -3,12 +3,15 @@ import { withRouter } from "react-router-dom";
 
 import { postRequest } from "../../services/api";
 
+import swal from "sweetalert2";
+
 
 class SignIn extends Component {
   state = {
     email: '',
     password: ''
   }
+
 
   submit = (e) => {
     e.preventDefault();
@@ -21,7 +24,8 @@ class SignIn extends Component {
     .then(res => res.json())
     .then(res => {
       if(res) {
-        console.log(res);        
+        console.log(res);
+        res.error ? swal({ type: 'error', title: 'Something went wrong...', text: res.error }) : this.props.history.push('/mainpage');
       }
     })
     .catch(err => console.log(err));
@@ -31,32 +35,42 @@ class SignIn extends Component {
   render(){
 
     return(
-      <div>
-        <form onSubmit={this.submit} >
-          <div>
-            <label htmlFor="email">Email:</label>
-            <input type="email"
-              id="email"
-              required
-              onChange={(e) => this.setState({email: e.target.value})} />
-          </div>
+      <div className="card">
+        <center><h3>Login</h3></center>
+        <div className="card-body">
+          <form onSubmit={this.submit} className="form-horizontal">
+            <div className="form-group">
+              <label htmlFor="email" className="control-label col-sm-5">Email:</label>
+              <div className="col-sm-10">
+                <input type="email"
+                  id="email"
+                  className="form-control"
+                  required
+                  onChange={(e) => this.setState({email: e.target.value})} />
+              </div>
+            </div>
 
-          <div>
-            <label htmlFor="password">Password: </label>
-            <input type="password"
-              id="password"
-              required
-              onChange={(e) => this.setState({ password: e.target.value })} />
-            
-          </div>
-
-         
-
-          <button type="submit">Submit</button>
-        </form>
+            <div className="form-group">
+              <label htmlFor="password" className="control-label col-sm-5">Password: </label>
+              <div className="col-sm-10">
+                <input type="password"
+                  id="password"
+                  className="form-control"
+                  required
+                  onChange={(e) => this.setState({ password: e.target.value })} />    
+              </div>        
+            </div>
+          
+            <div className="col-sm-6">
+            <button type="submit" className="btn submitBtn">Submit</button>
+            </div>
+          </form>
+        </div>
       </div>
     );
   }
 }
+
+
 
 export default withRouter(SignIn);

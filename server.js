@@ -1,11 +1,12 @@
 const express = require('express'),
       http = require('http'),
       bodyParser = require('body-parser'), 
-      mysql = require('mysql');
+      mysql = require('mysql'),
+      cors = require('cors');
 
 const app = express();
 
-const conn = mysql.createConnection({
+const sql = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
@@ -13,23 +14,34 @@ const conn = mysql.createConnection({
 });
 
 app.use(bodyParser.json({ type: '*/*' }));
+app.use(cors());
 
-conn.connect((err) => {
+sql.connect((err) => {
   if (err) throw err;
-  console.log('Connected to mysql db!');
+  console.log('Connected to mysql db');
 });
 
   app.get('/', function (req, res) {
     res.send('Please use /api/users or /api/tasks');
   });
-  
 
-  app.get('/users', (req, res) => {
-    conn.query('SELECT * from employees', (err, users) => {
+  app.get('/clients', (req, res) => {
+    sql.query('SELECT id, client_name FROM clients', (err, clients) => {
+      if (err) throw err;
+      res.json(clients);
+    });
+
+  });
+
+  app.post('/position/manager', (req, res) => {
+    const client = req.body.data;
+    sql.query('SELECT manager_name, position FROM clients WHERE client_name = ?',[client], (err, results) => {
       if (err) throw err; 
-      res.json(users);
-    });     
-
+        
+      if (results.length > 0) {
+        res.json(results);
+      }
+    });    
   });
 
   app.post('/signin', (req, res) => {
@@ -37,16 +49,15 @@ conn.connect((err) => {
     const email = req.body.email;
     const password = req.body.password;
     
-    conn.query('SELECT * from employees WHERE email = ? AND password = ?', [email, password], (err, user) => {
-     if (err) throw err; 
+    sql.query('SELECT * FROM employees WHERE email = ? AND password = ?', [email, password], (err, user) => {
+      if (err) throw err; 
       
       if(user.length > 0 ){
-        res.json({user});
+        res.json(user);
       } else { 
-        res.json({ error: 'Please check credentials' });
+        res.json({ error: 'Please check your credentials' });
       } 
     });
-
   });
 
 

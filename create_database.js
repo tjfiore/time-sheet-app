@@ -23,7 +23,8 @@ con.connect(function (err) {
   });
 
   const sql = "CREATE TABLE employees (name VARCHAR(255), address VARCHAR(255))";
-  con.query(sql, function (err, result) {
+  const sql2 = "CREATE TABLE clients (name VARCHAR(255), address VARCHAR(255))";
+  con.query([sql, sql2], function (err, result) {
     if (err) throw err;
     console.log("Table created");
   });

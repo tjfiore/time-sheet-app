@@ -9,7 +9,6 @@ export function postRequest(path, payload) {
   return fetch(`${url}${path}`, {
     method: 'POST',
     headers,
-    mode: 'no-cors',
     body: JSON.stringify(payload),
   });
 }
@@ -17,7 +16,6 @@ export function postRequest(path, payload) {
 export function getRequest(path) {
   return fetch(`${url}${path}`, {
     method: 'GET',
-    headers,
-    mode: 'no-cors',
+    headers,    
   });
 }

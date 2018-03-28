@@ -24,7 +24,6 @@ class SignIn extends Component {
     .then(res => res.json())
     .then(res => {
       if(res) {
-        console.log(res);
         res.error ? swal({ type: 'error', title: 'Something went wrong...', text: res.error }) : this.props.history.push('/mainpage', res);
       }
     })

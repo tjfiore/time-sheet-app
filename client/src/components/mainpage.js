@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { getRequest, postRequest } from "../services/api";
 
 import swal from "sweetalert2";
+import moment from "moment";
 
 class MainPage extends Component{
   state = {
@@ -22,19 +23,44 @@ class MainPage extends Component{
   }
 
   componentDidMount(){   
-    console.log(this.props.location.state);
-      
+         
     getRequest('/clients')
     .then(res => res.json())
     .then(res => {
       if(res){  
-        this.setState({clients: res});             
+        this.setState({clients: res});                   
       }            
     })
     .catch(err => console.log(err));
+    
+    // generate dates from 10 days of month to present date
+    const startDate = new Date(moment().subtract(10, 'days').calendar()); 
+    const endDate = new Date(); //YYYY-MM-DD
 
+    const getDateArray = function (start, end) {
+      const arr = [];
+      let dt = new Date(start);
+      while (dt <= end) {
+        arr.push(new Date(dt));
+        dt.setDate(dt.getDate() + 1);
+      }
+      return arr;
+    }
+    const dateArr = getDateArray(startDate, endDate);
+
+    const new_arr = [];
+    dateArr.forEach(date => {
+      let new_date = moment(date).format('ll');
+      new_arr.push(new_date);
+    });
+    this.setState({dates: new_arr})
+    
     
   }
+
+
+
+
    
 
   handleSelectChange = (e) => {
@@ -125,6 +151,7 @@ class MainPage extends Component{
           }
 
           <div className="form-group">
+            <label>Select Date</label>
             <select required className="form-control">
               {
                 this.state.dates.map((date, i) => {
@@ -153,11 +180,10 @@ class MainPage extends Component{
             <label >Comments</label>
             <textarea onChange={e => this.setState({ comments: e.target.value })} rows="5" className="form-control comment-area" /> 
           </div>
-            
-         
-          <div className="col-sm-6">
+                   
+      
             <button type="submit" className="btn submitBtn">Submit</button>
-          </div>
+       
         </form>
       </div>
     );

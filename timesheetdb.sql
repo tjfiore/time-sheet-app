@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 28, 2018 at 07:47 PM
+-- Generation Time: Mar 29, 2018 at 05:52 AM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 5.6.32
 
@@ -21,6 +21,27 @@ SET time_zone = "+00:00";
 --
 -- Database: `timesheetdb`
 --
+
+DELIMITER $$
+--
+-- Procedures
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_clients` ()  NO SQL
+    COMMENT 'get all records in clients table'
+SELECT * from clients$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_employees` ()  NO SQL
+    COMMENT 'get all records in employees table'
+SELECT * FROM employees$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_results` ()  NO SQL
+    COMMENT 'get all records in time_results table'
+SELECT * from time_results$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `results_entry` (IN `tname` VARCHAR(255), IN `stime` VARCHAR(50), IN `etime` VARCHAR(50), IN `sdate` VARCHAR(50), IN `comms` VARCHAR(255))  NO SQL
+INSERT INTO time_results(task_name, start_time, end_time, sdate, comments) VALUES(tname, stime, etime, sdate, comms)$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -116,19 +137,19 @@ ALTER TABLE `time_results`
 -- AUTO_INCREMENT for table `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(12) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `time_results`
 --
 ALTER TABLE `time_results`
-  MODIFY `id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(12) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -156,7 +156,17 @@ class MainPage extends Component{
         if(res){
           console.log(res);
           
-          swal({ type: 'success', title: 'Successfully submitted!', text:""  }) 
+          swal({ type: 'success', title: 'Successfully submitted!', text:""  }).then((result) => {
+            if(result.value){
+              document.getElementById("my-form").reset();
+              this.setState({
+                showfields: false,
+                showtimefield: false,
+                client: 'Select Client',
+                date: 'Select Date',             
+              });
+            }
+          }); 
         }
       })
       .catch(err => console.log(err));
@@ -195,7 +205,7 @@ class MainPage extends Component{
 
     return(
       <div className="align">
-        <form onSubmit={this.handleSubmit} className="form-horizontal">
+        <form onSubmit={this.handleSubmit} className="form-horizontal" id="my-form">
           { this.state.first_name && this.state.last_name && this.state.address ?
             <div className="row">
               <div className="col-sm-5">

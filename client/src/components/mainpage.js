@@ -21,7 +21,7 @@ class MainPage extends Component{
     mindiff: null,
     manager: '',
     position: '',
-    date:'',
+    date:'Select Date',
     dates: [],
     titleError:'',
     stimeError:'',
@@ -241,8 +241,8 @@ class MainPage extends Component{
           }
 
           <div className="form-group">
-            <label>Select Date</label>
-            <select required onChange={e => this.setState({date: e.target.value})} className="form-control">
+            <select required value={this.state.date} onChange={e => this.setState({date: e.target.value})} className="form-control">
+              <option disabled>Select Date</option>
               {
                 this.state.dates.map((date, i) => {
                   return <option key={i} value={date}>{date}</option>

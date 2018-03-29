@@ -64,7 +64,7 @@ INSERT INTO `clients` (`id`, `client_name`, `manager_name`, `position`) VALUES
 (1, 'Burt Solomon', 'Burt Solomon', 'Manager'),
 (2, 'Perry White', 'Morgan Edge', 'Photographer'),
 (3, 'Sophia Freeman', 'Cindy Lapor', 'Junior Dev'),
-(4, 'Dilan MattLand', 'Cherl White', 'Payroll Officer\r\n');
+(4, 'Dilan MattLand', 'Cherl White', 'Payroll Officer');
 
 -- --------------------------------------------------------
 
